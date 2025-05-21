@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Ministry;
+use Illuminate\Support\Facades\Auth;
+
+class UserMinistryController extends Controller
+{
+    // Show ministries user joined and available ministries
+    public function index()
+    {
+        $user = Auth::user();
+
+        // Ministries user has joined (assuming many-to-many with pivot)
+        $joinedMinistries = $user->ministries()->withPivot('role')->get();
+
+        // Ministries user has NOT joined yet
+        $availableMinistries = Ministry::whereNotIn('id', $joinedMinistries->pluck('id'))->get();
+
+        return view('user.ministries.index', compact('joinedMinistries', 'availableMinistries'));
+    }
+
+    // Handle user request to join a ministry
+    public function join(Request $request, Ministry $ministry)
+    {
+        $user = Auth::user();
+
+        // Check if user already joined
+        if ($user->ministries()->where('ministries.id', $ministry->id)->exists()) {
+            return redirect()->route('user.ministries.index')->with('info', 'You have already joined this ministry.');
+        }
+
+        // Attach user to ministry (you can customize pivot data if needed)
+        $user->ministries()->attach($ministry->id, ['role' => 'Member']); 
+
+        return redirect()->route('user.ministries.index')->with('success', 'Request to join sent successfully!');
+    }
+}

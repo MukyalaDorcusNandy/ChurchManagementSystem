@@ -32,7 +32,7 @@ class UserController extends Controller
     ]);
 
           // Hash the password before storing
-         $data['password'] = bcrypt($data['password']);
+     $data['password'] = bcrypt($data['password']);
 
     // Set default role and status for new registrations
     $data['role'] = 'member';
@@ -85,15 +85,46 @@ return redirect()->route('Users.index')->with('success', 'Registration submitted
             return back()->with('error', 'Your account is awaiting approval by the pastor.');
         }
      
-                return back()->with('error', 'Invalid email or password. Please register if you don\'t have an account.');
+            return back()->with('error', 'Invalid email or password. Please register if you don\'t have an account.');
    
-
     }
+
+
             // Logout user
     public function logout(){
         Auth::logout();
         return redirect()->route('login');
     }
+
+     // ** Missing dashboard method added here **
+    public function dashboard()
+    {
+        return view('Users.dashboard');  // Make sure this blade file exists
+    }
+
+    // Show edit profile form
+public function editProfile()
+{
+    $user = auth()->user();
+    return view('Users.edit-profile', compact('user'));
+}
+
+// Handle profile update form submission
+public function updateProfile(Request $request)
+{
+    $user = auth()->user();
+
+    $data = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email,' . $user->id,
+        // add other fields if needed
+    ]);
+
+    $user->update($data);
+
+    return redirect()->route('user.profile.edit')->with('success', 'Profile updated successfully.');
+}
+
    
 }
   

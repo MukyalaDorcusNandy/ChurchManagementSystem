@@ -17,6 +17,15 @@ use App\Http\Controllers\Admin\ContentController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SupportController;
 
+use App\Http\Controllers\UserMinistryController;
+use App\Http\Controllers\UserEventController;
+use App\Http\Controllers\UserAnnouncementController;
+use App\Http\Controllers\UserFeedbackController;
+use App\Http\Controllers\UserResourceController;
+
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +57,50 @@ Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     Route::get('/Users/dashboard', [UserController::class, 'dashboard'])->name('Users.dashboard');
 });
+
+
+
+Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
+    // Ministries index - show ministries user has joined + available ones
+    Route::get('Users/ministries', [UserMinistryController::class, 'index'])->name('ministries.index');
+
+    // Request to join a ministry
+    Route::post('/ministries/{ministry}/join', [UserMinistryController::class, 'join'])->name('ministries.join');
+});
+
+
+Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
+    // Events
+    Route::get('/events', [UserEventController::class, 'index'])->name('events.index');
+    Route::get('/events/{event}', [UserEventController::class, 'show'])->name('events.show');
+    Route::post('/events/{event}/join', [UserEventController::class, 'join'])->name('events.join');
+    Route::delete('/events/{event}/cancel', [UserEventController::class, 'cancel'])->name('events.cancel');
+
+    // Profile
+    Route::get('/profile/edit', [UserController::class, 'editProfile'])->name('profile.edit');
+    Route::post('/profile/update', [UserController::class, 'updateProfile'])->name('profile.update');
+});
+
+
+Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
+    Route::get('/announcements', [UserAnnouncementController::class, 'index'])->name('announcements.index');
+    // Add other user announcements routes if needed
+});
+
+
+Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
+    Route::get('feedback/create', [UserFeedbackController::class, 'create'])->name('feedback.create');
+    Route::post('feedback', [UserFeedbackController::class, 'store'])->name('feedback.store');
+});
+
+
+Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
+    // Other user routes...
+
+    // User resources index
+    Route::get('/resources', [UserResourceController::class, 'index'])->name('resources.index');
+});
+
 
 
 /*
