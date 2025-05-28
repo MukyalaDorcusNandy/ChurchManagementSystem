@@ -21,11 +21,14 @@ nav{
 }
 body {
     padding-top: 70px; /* Prevent content from hiding under navbar */
+      padding-bottom: 100px; /* give extra space for footer */
+
 }
 
 body,html{
     margin:0;
     padding:0;
+     scroll-behavior: smooth;
 }
 
 
@@ -99,6 +102,48 @@ body,html{
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a href="#hero" class="nav-link">Home</a></li>
                 <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
+
+                    <!-- EVENTS DROPDOWN START -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="eventsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Events
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
+                        <li><a class="dropdown-item" href="#youth">Youth Hangouts</a></li>
+                        <li><a class="dropdown-item" href="#selfhelp">Self Help</a></li>
+                        <li><a class="dropdown-item" href="#newyear">New Years</a></li>
+                    </ul>
+                </li>
+                
+
+                <!-- Add inside your navbar's <ul class="navbar-nav ms-auto"> -->
+
+<!-- Groups Dropdown -->
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#" id="groupsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Groups
+  </a>
+  <ul class="dropdown-menu" aria-labelledby="groupsDropdown">
+    <li><a class="dropdown-item" href="{{ route('groups.index') }}">VYG</a></li>
+    <li><a class="dropdown-item" href="{{ route('groups.index') }}">Caleb</a></li>
+    <li><a class="dropdown-item" href="{{ route('groups.index') }}">Soulwinners</a></li>
+    <li><a class="dropdown-item" href="{{ route('groups.index') }}">Ushers</a></li>
+  </ul>
+</li>
+
+<!-- Projects Dropdown -->
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#" id="projectsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Projects
+  </a>
+  <ul class="dropdown-menu" aria-labelledby="projectsDropdown">
+    <li><a class="dropdown-item" href="#art-culture">Art & Culture</a></li>
+    <li><a class="dropdown-item" href="#short-courses">Short Courses</a></li>
+    <li><a class="dropdown-item" href="#sports">Sports</a></li>
+    <li><a class="dropdown-item" href="#evangelism">Evangelism</a></li>
+  </ul>
+</li>
+
                 <li class="nav-item"><a href="{{ route('Users.register') }}" class="nav-link">Register</a></li>
                 <li class="nav-item"><a href="{{ route('Users.login') }}" class="nav-link">Login</a></li>
             </ul>
@@ -138,53 +183,62 @@ body,html{
     </div>
 </section>
 
-<!-- Features Section -->
-<section id="features" class="py-5 text-center">
+ 
+
+
+<!-- Events Section -->
+<section id="events" class="py-5 bg-light">
     <div class="container">
-        <h2 class="mb-4">What You Can Do</h2>
-        <div class="row g-4">
-            @foreach ([
-                ['Member Registration', 'bi-person-plus'],
-                ['View Church Events', 'bi-calendar-event'],
-                ['Pastor/Leader Dashboard', 'bi-speedometer2'],
-                ['Prayer Requests', 'bi-chat-heart'],
-                ['Tithing & Donations', 'bi-cash-stack']
-            ] as [$feature, $icon])
-            <div class="col-md-4">
-                <div class="p-4 bg-light rounded shadow-sm">
-                    <i class="bi {{ $icon }} feature-icon mb-3"></i>
-                    <h5>{{ $feature }}</h5>
-                </div>
-            </div>
-            @endforeach
-        </div>
+        <h2>All Events</h2>
+        <p>Explore our variety of spiritual and community-building events.</p>
     </div>
 </section>
 
-<!-- Testimonial/Scripture Section -->
-<section class="bg-light py-5">
-    <div class="container text-center">
-        <blockquote class="blockquote">
-            <p class="mb-0">“I can do all things through Christ who strengthens me.”</p>
-            <footer class="blockquote-footer">Philippians 4:13</footer>
-        </blockquote>
+<!-- Youth Hangouts Section -->
+<section id="youth" class="py-5">
+    <div class="container">
+        <h3>Youth Hangouts</h3>
+        <p>Engage with fellow youth in fun, faith-filled activities and discussions.</p>
     </div>
 </section>
 
-<!-- Footer -->
-<footer class="py-4">
-    <div class="container text-center">
-        <p>&copy; {{ date('Y') }} Universal Church. All rights reserved.</p>
-        <p>
-            Sunday Service: 10:00 AM - 12:00 PM | Wednesday Fellowship: 6:00 PM - 8:00 PM <br />
-            Contact: info@universalchurch.org | Phone: +256 700 000 000
-        </p>
-        <p>
-            <a href="#" class="text-white me-2">Facebook</a> |
-            <a href="#" class="text-white mx-2">Instagram</a> |
-            <a href="#" class="text-white ms-2">YouTube</a>
-        </p>
+<!-- Self Help Section -->
+<section id="selfhelp" class="py-5 bg-light">
+    <div class="container">
+        <h3>Self Help Groups</h3>
+        <p>Support and grow with others through empowerment, sharing, and development programs.</p>
     </div>
+</section>
+
+<!-- New Year Section -->
+<section id="newyear" class="py-5">
+    <div class="container">
+        <h3>New Year Celebrations</h3>
+        <p>Join us as we celebrate the beginning of a new year with faith, joy, and worship.</p>
+    </div>
+</section>
+
+<!-- Fixed Footer with Column Layout -->
+<footer class="bg-primary text-white py-3" style="position: ; bottom: 0; width: 100%; z-index: 1040;">
+  <div class="container d-flex flex-column align-items-center gap-3 text-center">
+    <div class="d-flex align-items-center gap-3">
+      <img src="{{ asset('images/logo.jpg') }}" alt="Universal Church Logo" style="height: 50px; object-fit: contain;" />
+      <small class="mb-0">&copy; {{ date('Y') }} Universal Church. All rights reserved.</small>
+    </div>
+    <div class="small">
+      Sunday Service: 10:00 AM - 12:00 PM | Wednesday Fellowship: 6:00 PM - 8:00 PM <br />
+      Contact: info@universalchurch.org | Phone: +256 700 000 000
+    </div>
+    <div class="d-flex gap-3 fs-4 justify-content-center flex-wrap">
+      <a href="#" class="text-white" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+      <a href="#" class="text-white" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+      <a href="#" class="text-white" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+      <a href="#" class="text-white" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+      <a href="#" class="text-white" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+      <a href="mailto:info@universalchurch.org" class="text-white" aria-label="Email"><i class="bi bi-envelope-fill"></i></a>
+      <a href="tel:+256700000000" class="text-white" aria-label="Phone"><i class="bi bi-telephone-fill"></i></a>
+    </div>
+  </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

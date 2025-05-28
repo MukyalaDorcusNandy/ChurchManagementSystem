@@ -36,6 +36,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
+Route::view('/groups', 'groups.index')->name('groups.index');
+
 // Home page
 Route::get('/Users', [UserController::class, 'index'])->name('Users.index');
 
